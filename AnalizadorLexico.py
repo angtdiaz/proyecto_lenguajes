@@ -134,6 +134,43 @@ def inputLex(s):
         print(tok)
 
 
+script = '''
+class Concesionario
+   @@numero_de_autos = 50
+   def initialize(jefe, marca)
+      @id_jefe = jefe
+      @empresa = marca
+   end
+end
+
+def sum_and_square(number1, number2)
+    result = number1 + number2
+    result * result
+end
+
+puts sum_and_square(2,3)
+
+print "Ingrese su nombre: "
+nombre = gets
+puts "Hola #{nombre}"
+
+x = 5
+while x >= 1
+    puts "Hola mundo"
+    x = x - 1
+end
+
+dia = "Lunes"
+a = 11
+unless a == 11 && dia == "Lunes"
+    puts "Hora  libre"   
+else
+    puts "Es hora de ir a clase de Lenguajes"
+end
+'''
+inputLex(script)
+
+
 token = " "
 while (token != 'x'):
     token = input('Token > ')
