@@ -1,14 +1,16 @@
 import ply.lex as lex
 
 # moises coronel / modificación angie tuarez
-tokens = ['VARIABLE', 'VARIABLE_GLOBAL', 'VARIABLE_INSTANCIA', 'VARIABLE_CLASE',
-          'CONSTANT', "FLOATINGPOINT", "INTEGER", "BOOLEAN", "LETTER", "STRING", "PLUS", "MINUS",
-          "TIMES", "DIVIDE", "AND", "OR", "NOT", "EQUALS", "LESS", "GREATER", "LPAREN", "RPAREN",
-          "COMMA", "SEMICOLON", "APOST", "QUOTE", "LBRACE", "RBRACE", "LBRACKET", "RBRACKET", "COMMENT", "POUND", "ISEQUAL", "TAB"]
+tokens = ['VARIABLE', 'VARIABLE_GLOBAL', 'VARIABLE_INSTANCIA',
+          'VARIABLE_CLASE', 'CONSTANT', "FLOATINGPOINT",
+          "INTEGER", "BOOLEAN", "LETTER", "STRING", "PLUS", "MINUS",
+          "TIMES", "DIVIDE", "AND", "OR", "NOT", "EQUALS", "LESS",
+          "GREATER", "LPAREN", "RPAREN", "COMMA", "SEMICOLON",
+          "APOST", "QUOTE", "LBRACE", "RBRACE", "LBRACKET",
+          "RBRACKET", "COMMENT", "POUND", "ISEQUAL", "TAB"]
 
 # Palabras reservadas (moises coronel)
 reserved = {
-
     'elsif': 'ELSIF',
     'else': 'ELSE',
     'if': 'IF',
@@ -77,7 +79,6 @@ def t_BOOLEAN(t):
     return t
 
 
-
 def t_LETTER(t):
     r"\'.\'"
     t.value = t.value.replace("", "")
@@ -132,9 +133,9 @@ def inputLex(s):
         print(tok)
 
 
-
-
-##token = " "
-##while (token != 'x'):
-##    token = input('Token > ')
- ##   inputLex(token)
+'''
+token = " "
+while (token != 'x'):
+    token = input('Token > ')
+    inputLex(token)
+'''
