@@ -28,11 +28,12 @@ def p_operadores(p):
 
 def p_operaciones(p):
     '''operaciones : comparacion
-                   | operadores valor
+                   | valor operadores valor
                    | valor operadores operaciones'''
 
 def p_variable(p):
-    '''variable : VARIABLE EQUALS valor'''
+    '''variable : VARIABLE EQUALS valor
+                | VARIABLE EQUALS operaciones'''
 
 def p_variable_global(p):
     '''variable_global : VARIABLE_GLOBAL EQUALS valor'''
