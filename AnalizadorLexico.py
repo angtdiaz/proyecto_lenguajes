@@ -1,10 +1,10 @@
 import ply.lex as lex
+
 # moises coronel / modificación angie tuarez
 tokens = ['VARIABLE', 'VARIABLE_GLOBAL', 'VARIABLE_INSTANCIA', 'VARIABLE_CLASE',
           'CONSTANT', "FLOATINGPOINT", "INTEGER", "BOOLEAN", "LETTER", "STRING", "PLUS", "MINUS",
           "TIMES", "DIVIDE", "AND", "OR", "NOT", "EQUALS", "LESS", "GREATER", "LPAREN", "RPAREN",
-          "COMMA", "SEMICOLON", "APOST", "QUOTE", "LBRACE", "RBRACE", "LBRACKET", "RBRACKET", "COMMENT", "POUND", "ISEQUAL"]
-
+          "COMMA", "SEMICOLON", "APOST", "QUOTE", "LBRACE", "RBRACE", "LBRACKET", "RBRACKET", "COMMENT", "POUND", "ISEQUAL", "TAB"]
 
 # Palabras reservadas (moises coronel)
 reserved = {
@@ -28,7 +28,8 @@ reserved = {
     'redo': 'REDO',
     'return': 'RETURN',
     'self': 'SELF',
-    'retry': 'RETRY'
+    'retry': 'RETRY',
+    'puts': 'PUTS'
 }
 
 tokens = tokens + list(reserved.values())
@@ -40,14 +41,15 @@ tokens = tokens + list(reserved.values())
 t_VARIABLE_GLOBAL = r'\$[a-zA-Z_][A-Za-z0-9_]*'
 t_VARIABLE_INSTANCIA = r'\@[a-zA-Z_][A-Za-z0-9_]*'
 t_VARIABLE_CLASE = r'\@\@[a-zA-Z_][A-Za-z0-9_]*'
-t_CONSTANT = r'[A-Z][a-z]*'
-# t_STRING = r'(\"|\')[a-zA-z0-9\s]*(\"|\')'
+t_CONSTANT = r'[A-Z][a-z0-9_]*'
+t_STRING = r'(\"|\')[a-zA-z0-9\s]*(\"|\')'
 t_COMMENT = r'(\#.*|\"\"\".*\"\"\")'
+t_TAB = r'\t'
 # ------------------------
 
 # angie tuarez
 t_PLUS = r"\+"
-t_MINUS = r"\-"
+t_MINUS = r'\-'
 t_TIMES = r"\*"
 t_DIVIDE = r"\/"
 t_AND = r"\&\&"
@@ -75,10 +77,6 @@ def t_BOOLEAN(t):
     return t
 
 
-def t_STRING(t):
-    r"\".*\""
-    return t
-
 
 def t_LETTER(t):
     r"\'.\'"
@@ -89,25 +87,25 @@ def t_LETTER(t):
 
 
 def t_VARIABLE(t):
-    r'[a-zA-Z_][A-Za-z0-9_]*'
+    r'[a-z][A-Za-z0-9_]*'
     t.type = reserved.get(t.value, 'VARIABLE')
     return t
 
 
 def t_FLOATINGPOINT(t):
-    r'-?\d+\.\d+'
+    r'\d+\.\d+'
     t.value = float(t.value)
     return t
 
 
 def t_INTEGER(t):
-    r'-?[0-9]+'
+    r'[0-9]+'
     t.value = int(t.value)
     return t
 
 
 # IGNORE
-t_ignore = " \t"
+t_ignore = " \n"
 
 
 # moises coronel
@@ -134,44 +132,9 @@ def inputLex(s):
         print(tok)
 
 
-script = '''
-class Concesionario
-   @@numero_de_autos = 50
-   def initialize(jefe, marca)
-      @id_jefe = jefe
-      @empresa = marca
-   end
-end
-
-def sum_and_square(number1, number2)
-    result = number1 + number2
-    result * result
-end
-
-puts sum_and_square(2,3)
-
-print "Ingrese su nombre: "
-nombre = gets
-puts "Hola #{nombre}"
-
-x = 5
-while x >= 1
-    puts "Hola mundo"
-    x = x - 1
-end
-
-dia = "Lunes"
-a = 11
-unless a == 11 && dia == "Lunes"
-    puts "Hora  libre"   
-else
-    puts "Es hora de ir a clase de Lenguajes"
-end
-'''
-inputLex(script)
 
 
-token = " "
-while (token != 'x'):
-    token = input('Token > ')
-    inputLex(token)
+##token = " "
+##while (token != 'x'):
+##    token = input('Token > ')
+ ##   inputLex(token)
