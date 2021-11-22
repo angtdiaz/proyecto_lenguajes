@@ -5,9 +5,9 @@ tokens = ['VARIABLE', 'VARIABLE_GLOBAL', 'VARIABLE_INSTANCIA',
           'VARIABLE_CLASE', 'CONSTANT', "FLOATINGPOINT",
           "INTEGER", "BOOLEAN", "LETTER", "STRING", "PLUS", "MINUS",
           "TIMES", "DIVIDE", "AND", "OR", "NOT", "EQUALS", "LESS",
-          "GREATER", "LPAREN", "RPAREN", "COMMA", "SEMICOLON",
-          "APOST", "QUOTE", "LBRACE", "RBRACE", "LBRACKET",
-          "RBRACKET", "COMMENT", "POUND", "ISEQUAL", "TAB"]
+          "GREATER", "LPAREN", "RPAREN", "COMMA", "SEMICOLON", "ISEQUAL", "COMMENT", "TAB"]
+#   "APOST", "QUOTE", "LBRACE", "RBRACE", "LBRACKET",
+#   "RBRACKET", "POUND", ]
 
 # Palabras reservadas (moises coronel)
 reserved = {
@@ -39,7 +39,7 @@ tokens = tokens + list(reserved.values())
 
 # TOKENS (Moises Coronel)
 
-#t_VARIABLE = r'[a-z][A-Za-z0-9_]*'
+# t_VARIABLE = r'[a-z][A-Za-z0-9_]*'
 t_VARIABLE_GLOBAL = r'\$[a-zA-Z_][A-Za-z0-9_]*'
 t_VARIABLE_INSTANCIA = r'\@[a-zA-Z_][A-Za-z0-9_]*'
 t_VARIABLE_CLASE = r'\@\@[a-zA-Z_][A-Za-z0-9_]*'
@@ -64,13 +64,13 @@ t_LPAREN = r"\("
 t_RPAREN = r"\)"
 t_COMMA = r"\,"
 t_SEMICOLON = r"\;"
-t_APOST = r"\'"
-t_QUOTE = r"\""
-t_LBRACE = r"\{"
-t_RBRACE = r"\}"
-t_LBRACKET = r"\["
-t_RBRACKET = r"\]"
-t_POUND = r"\#"
+# t_APOST = r"\'"
+# t_QUOTE = r"\""
+# t_LBRACE = r"\{"
+# t_RBRACE = r"\}"
+# t_LBRACKET = r"\["
+# t_RBRACKET = r"\]"
+# t_POUND = r"\#"
 t_EQUALS = r"\="
 
 
