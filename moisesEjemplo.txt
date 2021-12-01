@@ -1,0 +1,12 @@
+if 5 > 4  
+  puts 5+4
+end
+
+@numero = 10
+@numero1 = 5
+
+if @numero > @numero1
+  puts @numero+@numero1
+else 
+  puts @numero-@numero1
+end
