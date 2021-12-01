@@ -6,20 +6,15 @@ reglas=[]
 sucess=True
 
 # Regla padre
-def p_prueba (p):
-    ''' prueba : expresion
-    | elementos
-    | elementos_hash
-    | iteracion
-    | condicional_if
-     '''
+
 def p_programa(p):
-    '''programa : identificador
+    '''programa : clase
+    | metodo
+    | metodo programa
+    | lista_codigo programa
     | expresion
-    | asignacion
-    | condicional_if
-    | expresion_condicion
-    | clase
+    | expresion programa
+
     '''
 
 def p_identificador(p):
@@ -45,7 +40,9 @@ def p_expresion(p):
     | arreglo
     | hash
     | puts
+    | times
     '''
+
 def p_arreglo(p):
     '''
     arreglo : identificador EQUALS LBRACKET elementos RBRACKET
@@ -72,9 +69,13 @@ def p_puts(p):
 ## definicion de clase
 def p_clase(p):
     '''
-    clase : CLASS CONSTANT expresion metodo END
-    | CLASS CONSTANT expresion END
-    | CLASS CONSTANT metodo END
+    clase : CLASS CONSTANT varias_exp varios_met END
+    | CLASS CONSTANT varias_exp END
+    | CLASS CONSTANT varios_met END
+    varias_exp : expresion
+    | expresion varias_exp
+    varios_met : metodo
+    | varios_met
     '''
 ##definicion metodo
 def p_metodo(p):
@@ -128,8 +129,8 @@ def p_iteracion(p):
     rango : LPAREN INTEGER DOT DOT INTEGER RPAREN
     '''
 def p_times(p):
-    ''' times : INTEGER DOT TIMES LBRACKET expresion RBRACKET
-    | identificador DOT TIMES LBRACKET expresion RBRACKET
+    ''' times : INTEGER DOT TIMES LBRACE expresion RBRACE
+    | identificador DOT TIMES LBRACE expresion RBRACE
     | INTEGER DOT TIMES DO expresion END
     | identificador DOT TIMES DO expresion END
     '''
@@ -141,11 +142,9 @@ def p_expresion_matematica(p):
                     | expresion DIVIDE expresion
     """
 def p_asignacion(p):
-    """
-    asignacion : identificador EQUALS expresion
+    """asignacion : identificador EQUALS expresion
                 | identificador PLUS EQUALS expresion
-                | identificador MINUS EQUALS expresion
-    """
+                | identificador MINUS EQUALS expresion"""
 def p_llamar_funcion(p):
     '''llamar_funcion : VARIABLE
     | VARIABLE LPAREN parametro RPAREN
