@@ -1,0 +1,12 @@
+if 5 > 4  
+  puts 'La variable xyz es mayor que 4'  
+  puts 'Puedo poner más instrucciones dentro del if'
+  if xyz == 5  
+    puts 'Se puede anidar un bloque if,else,end dentro de otro' 
+  else  
+    puts "Parte del bloque anidado"  
+  end  
+else  
+  puts 'La variable xyz no es mayor que 4'
+  puts 'También puedo poner múltiples sentencias' 
+end

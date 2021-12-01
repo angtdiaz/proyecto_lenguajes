@@ -12,33 +12,26 @@ class Ventana:
         root.geometry("900x700")
         root.configure(background='#0B0B0B')
         # Añadimos titulo
-
         self.titulo = tk.Label(
-            root, text="Analizador Léxico y Sintáctico de Ruby")
+            root, text="Analizador Léxico y Sintáctico de Lenguaje de Programación: Ruby")
         self.titulo.place(x=100, y=20)
         self.titulo.config(fg="black",
                            font=("Arial", 22))
-
         # Añadimos entrada
-
         self.Labelentrada = tk.Label(root, text="Ingrese su expresion:  ")
         self.Labelentrada.place(x=10, y=70)
         self.Labelentrada.config(fg="black",
                                  font=("Arial", 12))
-
         self.txt = tk.Text(root, width=70)
         self.txt.place(x=180, y=70)
         self.txt.focus()
-
         # Añadimos botones
-
         self.buttonLexico = tk.Button(
             root, text="Analizar Léxico", command=self.aLexico)
         self.buttonLexico.place(x=100, y=530)
         self.buttonLexico.config(fg="white",  # Foreground
                                  bg="gray",  # Background
                                  font=("Verdana", 18))
-
         self.buttonSintactico = tk.Button(
             root, text="Analizar Sintáctico", command=self.aSintactico)
         self.buttonSintactico.place(x=300, y=530)
