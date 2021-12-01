@@ -10,10 +10,12 @@ sucess=True
 def p_programa(p):
     '''programa : clase
     | metodo
+    | clase programa
     | metodo programa
     | lista_codigo programa
     | expresion
     | expresion programa
+    |
 
     '''
 
@@ -24,7 +26,9 @@ def p_identificador(p):
     | VARIABLE_CLASE
     | VARIABLE_INSTANCIA'''
 def p_asignacion(p):
-    '''asignacion : identificador EQUALS number'''
+    '''asignacion : identificador EQUALS number'
+    | identificador EQUALS llamar_funcion
+    '''
 def p_number(p):
     '''number : INTEGER
     | FLOATINGPOINT'''
@@ -148,7 +152,8 @@ def p_asignacion(p):
 def p_llamar_funcion(p):
     '''llamar_funcion : VARIABLE
     | VARIABLE LPAREN parametro RPAREN
-    | VARIABLE DOT VARIABLE'''
+    | VARIABLE DOT VARIABLE
+    | identificador DOT VARIABLE'''
 def p_vacio(p):
     '''vacio : '''
 def p_error(p):
