@@ -8,22 +8,16 @@ sucess = True
 # Regla padre
 
 
-def p_prueba(p):
-    ''' prueba : expresion
-    | elementos
-    | elementos_hash
-    | iteracion
-    | condicional_if
-     '''
-
-
 def p_programa(p):
-    '''programa : identificador
+    '''programa : clase
+    | metodo
+    | clase programa
+    | metodo programa
+    | lista_codigo programa
     | expresion
-    | asignacion
-    | condicional_if
-    | expresion_condicion
-    | clase
+    | expresion programa
+    |
+
     '''
 
 
@@ -36,7 +30,9 @@ def p_identificador(p):
 
 
 def p_asignacion(p):
-    '''asignacion : identificador EQUALS number'''
+    '''asignacion : identificador EQUALS number'
+    | identificador EQUALS llamar_funcion
+    '''
 
 
 def p_number(p):
@@ -56,6 +52,7 @@ def p_expresion(p):
     | arreglo
     | hash
     | puts
+    | times
     '''
 
 
@@ -95,9 +92,13 @@ def p_puts(p):
 
 def p_clase(p):
     '''
-    clase : CLASS CONSTANT expresion metodo END
-    | CLASS CONSTANT expresion END
-    | CLASS CONSTANT metodo END
+    clase : CLASS CONSTANT varias_exp varios_met END
+    | CLASS CONSTANT varias_exp END
+    | CLASS CONSTANT varios_met END
+    varias_exp : expresion
+    | expresion varias_exp
+    varios_met : metodo
+    | metodo varios_met
     '''
 # definicion metodo
 
@@ -123,16 +124,25 @@ def p_metodo(p):
 
 def p_condicional_if(p):
     '''
-    condicional_if : IF expresion_condicion lista_codigo END
+    condicional_if : IF identificador lista_codigo END
+    | IF identificador lista_codigo else END
+    | IF identificador lista_codigo elsif END
+    | IF identificador lista_codigo else elsif END
+    | IF identificador lista_codigo elsif else END
+
+    | IF expresion_condicion lista_codigo END
     | IF expresion_condicion lista_codigo else END
     | IF expresion_condicion lista_codigo elsif END
     | IF expresion_condicion lista_codigo else elsif END
     | IF expresion_condicion lista_codigo elsif else END
     else : ELSE expresion_condicion
+    | ELSE identificador else
     | ELSE lista_codigo else
 
     elsif : ELSIF expresion_condicion lista_codigo
     | ELSIF expresion_condicion lista_codigo elsif
+    | ELSIF identificador lista_codigo
+    | ELSIF identificador lista_codigo elsif
     '''
 
 
@@ -159,8 +169,8 @@ def p_iteracion(p):
 
 
 def p_times(p):
-    ''' times : INTEGER DOT TIMES LBRACKET expresion RBRACKET
-    | identificador DOT TIMES LBRACKET expresion RBRACKET
+    ''' times : INTEGER DOT TIMES LBRACE expresion RBRACE
+    | identificador DOT TIMES LBRACE expresion RBRACE
     | INTEGER DOT TIMES DO expresion END
     | identificador DOT TIMES DO expresion END
     '''
@@ -176,17 +186,16 @@ def p_expresion_matematica(p):
 
 
 def p_asignacion(p):
-    """
-    asignacion : identificador EQUALS expresion
+    """asignacion : identificador EQUALS expresion
                 | identificador PLUS EQUALS expresion
-                | identificador MINUS EQUALS expresion
-    """
+                | identificador MINUS EQUALS expresion"""
 
 
 def p_llamar_funcion(p):
     '''llamar_funcion : VARIABLE
     | VARIABLE LPAREN parametro RPAREN
-    | VARIABLE DOT VARIABLE'''
+    | VARIABLE DOT VARIABLE
+    | identificador DOT VARIABLE'''
 
 
 def p_vacio(p):
