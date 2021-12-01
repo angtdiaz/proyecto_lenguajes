@@ -1,203 +1,169 @@
+import ply.yacc
+import ply.lex as lex
 import ply.yacc as yacc
-from AnalizadorLexico import tokens, lex
-
+from AnalizadorLexico import tokens, lexer
+reglas=[]
+sucess=True
 
 # Regla padre
-def p_prueba(p):
-    '''prueba : variable
-              | variable_global
-              | variable_instancia
-              | constant
-              | variable_clase
-              | imprimir
-              | clase
-              | operaciones
-              | arreglos
-              | hash'''
+def p_prueba (p):
+    ''' prueba : expresion
+    | elementos
+    | elementos_hash
+    | iteracion
+    | condicional_if
+     '''
+def p_programa(p):
+    '''programa : identificador
+    | expresion
+    | asignacion
+    | condicional_if
+    | expresion_condicion
+    | clase
+    '''
 
-
-# moises coronel---->>>
-def p_clase(p):
-    '''clase : CLASS CONSTANT END'''
-
-
-def p_operadores(p):
-    '''operadores : PLUS
-                  | MINUS
-                  | TIMES
-                  | DIVIDE'''
-
-
-def p_operaciones(p):
-    '''operaciones : comparacion
-                   | valor operadores valor
-                   | valor operadores operaciones'''
-
-
-def p_variable(p):
-    '''variable : VARIABLE EQUALS valor
-                | VARIABLE EQUALS operaciones'''
-
-
-def p_variable_global(p):
-    '''variable_global : VARIABLE_GLOBAL EQUALS valor'''
-
-
-def p_variable_instancia(p):
-    '''variable_instancia : VARIABLE_INSTANCIA EQUALS valor'''
-
-
-def p_constant(p):
-    '''constant : CONSTANT  EQUALS  valor'''
-
-
-def p_variable_clase(p):
-    '''variable_clase : VARIABLE_CLASE EQUALS valor'''
-
-
-def p_arreglos(p):
-    '''arreglos : VARIABLE EQUALS LBRACKET valor_arreglo RBRACKET'''
-
-
-def p_valor_arreglo(p):
-    '''valor_arreglo : valor
-                     | valor_arreglo COMMA valor'''
-
-
+def p_identificador(p):
+    ''' identificador : VARIABLE
+    | CONSTANT
+    | VARIABLE_GLOBAL
+    | VARIABLE_CLASE
+    | VARIABLE_INSTANCIA'''
+def p_asignacion(p):
+    '''asignacion : identificador EQUALS number'''
+def p_number(p):
+    '''number : INTEGER
+    | FLOATINGPOINT'''
+def p_expresion(p):
+    '''expresion : identificador
+    | STRING
+    | number
+    | BOOLEAN
+    | expresion_condicion
+    | expresion_matematica
+    | llamar_funcion
+    | asignacion
+    | arreglo
+    | hash
+    | puts
+    '''
+def p_arreglo(p):
+    '''
+    arreglo : identificador EQUALS LBRACKET elementos RBRACKET
+    '''
+    print("arreglo")
+def p_elementos(p):
+    '''
+    elementos : expresion
+    | expresion COMMA elementos
+    '''
 def p_hash(p):
-    '''hash : VARIABLE EQUALS LBRACE valores_hash RBRACE '''
-
-
-def p_asig_valor(p):
-    '''asig_valor : STRING EQUALS GREATER valor
-                  | INTEGER EQUALS GREATER valor'''
-
-
-def p_valores_hash(p):
-    '''valores_hash : asig_valor
-                    | valores_hash COMMA asig_valor'''
-
-
-def p_valor(p):
-    '''valor : booleano
-             | comparable'''
-
-
-def p_imprimir(p):
-    '''imprimir : PUTS valor'''
+    '''
+    hash : identificador EQUALS LBRACE elementos_hash RBRACE
+    '''
+def p_elementos_hash(p):
+    '''
+    elementos_hash : expresion EQUALS GREATER expresion
+    | expresion EQUALS GREATER expresion COMMA elementos_hash
+    '''
+def p_puts(p):
+    '''puts : PUTS expresion
+    | PUTS LPAREN expresion RPAREN'''
     print(p[2])
-# <<<<<------ moises coronel
-
-# Mario Chalén --->>
-
-
-def p_booleano(p):
-    '''booleano : comparacion
-                | multibool
-                | negacion
-                | BOOLEAN'''
-
-
-def p_negacion(p):
-    '''negacion : NOT booleano
-                | NOT VARIABLE'''
-
-
-def p_comparable(p):
-    '''comparable : INTEGER
-                  | FLOATINGPOINT
-                  | STRING
-                  | VARIABLE'''
-
-
-def p_comparador(p):
-    '''comparador : ISEQUAL
-                  | GREATER
-                  | LESS'''
+## definicion de clase
+def p_clase(p):
+    '''
+    clase : CLASS CONSTANT expresion metodo END
+    | CLASS CONSTANT expresion END
+    | CLASS CONSTANT metodo END
+    '''
+##definicion metodo
+def p_metodo(p):
+    '''
+    metodo : DEF VARIABLE puts END
+    | DEF VARIABLE LPAREN parametro RPAREN lista_codigo END
+    parametro : VARIABLE
+    | VARIABLE COMMA parametro
+    lista_codigo : lista_codigo codigo
+    | vacio
+    codigo : asignacion
+    | expresion
+    | condicional_if
+    | iteracion
+    | puts
 
 
-def p_comparacion(p):
-    '''comparacion : comparable comparador comparable'''
 
+    '''
+def p_condicional_if(p):
+    '''
+    condicional_if : IF expresion lista_codigo END
+    | IF expresion lista_codigo else END
+    | IF expresion lista_codigo elsif END
+    | IF expresion lista_codigo else elsif END
+    | IF expresion lista_codigo elsif else END
 
-def p_union(p):
-    '''union : AND
-             | OR'''
+    else : ELSE lista_codigo
+    | ELSE lista_codigo else
 
+    elsif : ELSIF expresion lista_codigo
+    | ELSIF expresion lista_codigo elsif
+    '''
 
-def p_multibool(p):
-    '''multibool : VARIABLE union VARIABLE
-                 | booleano union VARIABLE
-                 | VARIABLE union booleano
-                 | booleano union booleano'''
+def p_expresion_condicion(p):
+    '''expresion_condicion : expresion EQUALS EQUALS expresion
+    | expresion ISEQUAL expresion
+    | expresion NOT EQUALS expresion
+    | expresion LESS expresion
+    | expresion LESS EQUALS expresion
+    | expresion GREATER expresion
+    | expresion GREATER EQUALS expresion
+    | expresion AND expresion
+    | expresion OR expresion
+    | NOT expresion'''
+def p_iteracion(p):
+    ''' iteracion : WHILE expresion lista_codigo END
+    | FOR expresion IN expresion lista_codigo END
+    | FOR expresion IN rango lista_codigo END
 
-# <<--- Mario Chalén
-
-# Angie
-
-
-def p_expression(p):
+    rango : LPAREN INTEGER DOT DOT INTEGER RPAREN
+    '''
+def p_times(p):
+    ''' times : INTEGER DOT TIMES LBRACKET expresion RBRACKET
+    | identificador DOT TIMES LBRACKET expresion RBRACKET
+    | INTEGER DOT TIMES DO expresion END
+    | identificador DOT TIMES DO expresion END
+    '''
+def p_expresion_matematica(p):
     """
-    expression : BOOLEAN
-               | number
-               | STRING
-               | VARIABLE
-               | VARIABLE_GLOBAL
-               | VARIABLE_INSTANCIA
-               | VARIABLE_CLASE
-               | LETTER
-               | comparacion
+    expresion_matematica : expresion PLUS expresion
+                    | expresion MINUS expresion
+                    | expresion TIMS expresion
+                    | expresion DIVIDE expresion
     """
-
-
-def p_function(p):
+def p_asignacion(p):
     """
-    function : type STRING argument_list_option compound_statement END
-    argument_list_option : argument_list
-                         | empty
-    argument_list : argument_list COMMA argument
-                  | argument
-    argument : type STRING
-    compound_statement : LBRACE statement_list RBRACE
-    statement_list : statement_list statement
-                   | empty
-    statement : selection_statement
-              | return_statement
+    asignacion : identificador EQUALS expresion
+                | identificador PLUS EQUALS expresion
+                | identificador MINUS EQUALS expresion
     """
-
-
-def p_type(p):
-    """
-    type : BOOLEAN
-        | INTEGER
-        | FLOAT
-        | CHAR
-        | STRING
-    """
-
-
-def p_selection_statement(p):
-    """
-    selection_statement : IF expression compound_statement END
-                        | IF expression statement END
-                        | IF expression compound_statement ELSE statement END
-    """
-
-
-def p_return_statement(p):
-    """
-    return_statement : RETURN SEMICOLON
-                     | RETURN expression SEMICOLON
-                     | RETURN
-                     | RETURN expression
-    """
-
-
+def p_llamar_funcion(p):
+    '''llamar_funcion : VARIABLE
+    | VARIABLE LPAREN parametro RPAREN
+    | VARIABLE DOT VARIABLE'''
+def p_vacio(p):
+    '''vacio : '''
 def p_error(p):
-    print("error syntaxis")
+    if p:
+        texto = "Syntax error near '%s', line '%s', '%s'" % (
+            p.value, p.lineno - 1, p.type)
+        print(texto)
+        reglas.append(texto)
+
+
 
 
 parser = yacc.yacc()
+''''
 while True:
     try:
         s = input('calc> ')
@@ -207,3 +173,14 @@ while True:
         continue
     result = parser.parse(s)
     print(result)
+'''
+
+def aSintactico(s):
+    lexer.lineno = 1
+    reglas.clear()  # limpio los errores
+    result = str(parser.parse(s))
+    print(result)
+    prueba = []
+    for regla in reglas:
+        prueba.append(regla + " \n")
+    return prueba
