@@ -5,7 +5,7 @@ tokens = ['VARIABLE', 'VARIABLE_GLOBAL', 'VARIABLE_INSTANCIA',
           'VARIABLE_CLASE', 'CONSTANT', "FLOATINGPOINT",
           "INTEGER", "BOOLEAN", "STRING", "PLUS", "MINUS",
           "TIMS", "DIVIDE", "AND", "OR", "NOT", "EQUALS", "LESS",
-          "GREATER", "DOT", "LPAREN", "RPAREN", "COMMA", "SEMICOLON", "ISEQUAL", "COMMENT", "LBRACE", "RBRACE", "LBRACKET", "RBRACKET"]
+          "GREATER", "DOT", "LPAREN", "RPAREN", "COMMA", "ISEQUAL", "LBRACE", "RBRACE", "LBRACKET", "RBRACKET"]
 
 # Palabras reservadas (moises coronel)
 reserved = {
@@ -17,7 +17,7 @@ reserved = {
     'do': 'DO',
     'while': 'WHILE',
     'end': 'END',
-    'begin': 'BEGIN',
+    #'begin': 'BEGIN',
     'in': 'IN',
     'for': 'FOR',
     'return': 'RETURN',
@@ -36,7 +36,7 @@ t_VARIABLE_INSTANCIA = r'\@[a-zA-Z_][A-Za-z0-9_]*'
 t_VARIABLE_CLASE = r'\@\@[a-zA-Z_][A-Za-z0-9_]*'
 t_CONSTANT = r'[A-Z][a-z0-9_]*'
 t_STRING = r'(\"|\')[a-zA-z0-9\s\.\?\¿\!\¡\,\;\:]*(\"|\')'
-t_COMMENT = r'(\#.*|\"\"\".*\"\"\")'
+#t_COMMENT = r'(\#.*|\"\"\".*\"\"\")'
 
 t_DOT = r'\.'
 # ------------------------
