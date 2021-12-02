@@ -13,7 +13,7 @@ class Ventana:
         root.configure(background='#0B0B0B')
         # Añadimos titulo
         self.titulo = tk.Label(
-            root, text="Analizador Léxico y Sintáctico de Lenguaje de Programación: Ruby")
+            root, text="Analizador Léxico y Sintáctico de Ruby")
         self.titulo.place(x=100, y=20)
         self.titulo.config(fg="black",
                            font=("Arial", 22))

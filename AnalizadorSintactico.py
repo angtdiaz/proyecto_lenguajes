@@ -102,15 +102,16 @@ def p_clase(p):
     '''
 # definicion metodo
 
-
 def p_metodo(p):
     '''
-    metodo : DEF VARIABLE puts END
+    metodo : DEF VARIABLE lista_codigo END
     | DEF VARIABLE LPAREN parametro RPAREN lista_codigo END
+    | DEF VARIABLE LPAREN parametro RPAREN lista_codigo RETURN expresion END
     parametro : VARIABLE
     | VARIABLE COMMA parametro
-    lista_codigo : lista_codigo codigo
+    lista_codigo : codigo
     | vacio
+    | codigo lista_codigo
     codigo : asignacion
     | expresion
     | condicional_if
@@ -135,7 +136,7 @@ def p_condicional_if(p):
     | IF expresion_condicion lista_codigo elsif END
     | IF expresion_condicion lista_codigo else elsif END
     | IF expresion_condicion lista_codigo elsif else END
-    else : ELSE expresion_condicion
+    else : ELSE varias_exp
     | ELSE identificador else
     | ELSE lista_codigo else
 
