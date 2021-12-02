@@ -1,11 +1,11 @@
 import ply.lex as lex
-reglas=[]
+reglas = []
 # moises coronel / modificación angie tuarez
-tokens = ['ADMI','VARIABLE', 'VARIABLE_GLOBAL', 'VARIABLE_INSTANCIA',
+tokens = ['VARIABLE', 'VARIABLE_GLOBAL', 'VARIABLE_INSTANCIA',
           'VARIABLE_CLASE', 'CONSTANT', "FLOATINGPOINT",
-          "INTEGER", "BOOLEAN", "LETTER", "STRING", "PLUS", "MINUS",
+          "INTEGER", "BOOLEAN", "STRING", "PLUS", "MINUS",
           "TIMS", "DIVIDE", "AND", "OR", "NOT", "EQUALS", "LESS",
-          "GREATER","DOT", "LPAREN", "RPAREN", "COMMA", "SEMICOLON", "ISEQUAL", "COMMENT", "TAB" , "APOST", "QUOTE", "LBRACE", "RBRACE", "LBRACKET", "RBRACKET", "POUND", ]
+          "GREATER", "DOT", "LPAREN", "RPAREN", "COMMA", "SEMICOLON", "ISEQUAL", "COMMENT", "LBRACE", "RBRACE", "LBRACKET", "RBRACKET"]
 
 # Palabras reservadas (moises coronel)
 reserved = {
@@ -16,19 +16,11 @@ reserved = {
     'class': 'CLASS',
     'do': 'DO',
     'while': 'WHILE',
-    'unless': 'UNLESS',
     'end': 'END',
     'begin': 'BEGIN',
-    'break': 'BREAK',
-    'case': 'CASE',
     'in': 'IN',
-    'raise': 'RAISE',
     'for': 'FOR',
-    'nil': 'NIL',
-    'redo': 'REDO',
     'return': 'RETURN',
-    'self': 'SELF',
-    'retry': 'RETRY',
     'puts': 'PUTS',
     'times': 'TIMES'
 }
@@ -50,7 +42,6 @@ t_DOT = r'\.'
 # ------------------------
 
 # angie tuarez
-t_ADMI = r'\¡'
 t_PLUS = r"\+"
 t_MINUS = r'\-'
 t_TIMS = r"\*"
@@ -64,14 +55,13 @@ t_GREATER = r"\>"
 t_LPAREN = r"\("
 t_RPAREN = r"\)"
 t_COMMA = r"\,"
-t_SEMICOLON = r"\;"
-t_APOST = r"\'"
-t_QUOTE = r"\""
+# t_SEMICOLON = r"\;"
+# t_QUOTE = r"\""
 t_LBRACE = r"\{"
 t_RBRACE = r"\}"
 t_LBRACKET = r"\["
 t_RBRACKET = r"\]"
-t_POUND = r"\#"
+# t_POUND = r"\#"
 t_EQUALS = r"\="
 
 
@@ -80,10 +70,10 @@ def t_BOOLEAN(t):
     return t
 
 
-def t_LETTER(t):
-    r"\'.\'"
-    t.value = t.value.replace("", "")
-    return t
+# def t_LETTER(t):
+#     r"\'.\'"
+#     t.value = t.value.replace("", "")
+#     return t
 
 # moises coronel
 
@@ -140,6 +130,7 @@ while (token != 'x'):
     token = input('Token > ')
     inputLex(token)
 '''
+
 
 def aLexico(data):
     lexer.lineno = 0
