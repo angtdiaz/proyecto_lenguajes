@@ -41,6 +41,7 @@ def p_expresion(p):
     | arreglo
     | hash
     | puts
+    | valorArr
     | times
     '''
 
@@ -48,8 +49,9 @@ def p_expresion(p):
 def p_arreglo(p):
     '''
     arreglo : identificador EQUALS LBRACKET elementos RBRACKET
+    valorArr : identificador LBRACKET valores_mat RBRACKET
     '''
-    print("arreglo")
+
 
 
 def p_elementos(p):
@@ -125,7 +127,10 @@ def p_condicional_if(p):
     | ELSE lista_codigo elsif
     elsif : ELSIF expresion_condicion lista_codigo
     | ELSIF expresion_condicion lista_codigo elsif
-        | ELSIF expresion_condicion lista_codigo else
+    | ELSIF expresion_condicion lista_codigo else
+    | ELSIF LPAREN expresion_condicion RPAREN lista_codigo
+    | ELSIF LPAREN expresion_condicion RPAREN lista_codigo elsif
+    | ELSIF LPAREN expresion_condicion RPAREN lista_codigo else
 
     '''
 # regla semantica de condicion restringe el uso de booleanos, no se puede comparar con números
