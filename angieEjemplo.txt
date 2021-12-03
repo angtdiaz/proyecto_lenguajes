@@ -21,7 +21,7 @@ end
 18%5=3
 
 #Error Semántico
-if(true>true)
+if(true>4)
     puts "chao"
 end
 
