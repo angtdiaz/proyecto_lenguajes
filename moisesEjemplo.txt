@@ -1,12 +1,28 @@
-if 5 > 4  
-  puts 5+4
-end
+class Perro
 
-@numero = 10
-@numero1 = 5
 
-if @numero > @numero1
-  puts @numero+@numero1
-else 
-  puts @numero-@numero1
+  def initialize(raza, nombre)
+
+    @raza = raza
+    @nombre = nombre
+  end
+
+
+  def ladrar
+    puts 'Guau! Guau!'
+  end
+
+
+  def saludar
+    puts "Hola soy un perro de raza"
+  end
 end
+if (animal == 'gato')
+   puts 'miau miau'
+else
+   for i in (0..5)
+   	puts 'guau guau'
+   end
+end
+hash
+persona = {"nombre"=>"German", "apellido"=>"Escobar", "edad"=>34, "estatura"=>1.8, "peso"=>65}

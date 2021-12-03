@@ -10,3 +10,5 @@ else
   puts 'La variable xyz no es mayor que 4'
   puts 'Tambien puedo poner multiples sentencias'
 end
+
+array = [1, "Pedro", true, false, "Juan"]

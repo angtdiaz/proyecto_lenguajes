@@ -7,33 +7,22 @@ sucess = True
 
 # Regla padre
 
-
+#
 def p_programa(p):
-    '''programa : clase
+   '''programa : clase
     | metodo
     | clase programa
     | metodo programa
     | lista_codigo programa
     | expresion
     | expresion programa
-    |
-
     '''
-
-
 def p_identificador(p):
     ''' identificador : VARIABLE
     | CONSTANT
     | VARIABLE_GLOBAL
     | VARIABLE_CLASE
     | VARIABLE_INSTANCIA'''
-
-
-def p_asignacion(p):
-    '''asignacion : identificador EQUALS number'
-    | identificador EQUALS llamar_funcion
-    '''
-
 
 def p_number(p):
     '''number : INTEGER
@@ -85,8 +74,9 @@ def p_elementos_hash(p):
 
 def p_puts(p):
     '''puts : PUTS expresion
-    | PUTS LPAREN expresion RPAREN'''
-    print(p[2])
+    | PUTS expresion_matematica
+    | PUTS LPAREN expresion RPAREN
+    | PUTS LPAREN expresion_matematica RPAREN'''
 # definicion de clase
 
 
@@ -116,56 +106,66 @@ def p_metodo(p):
     | expresion
     | condicional_if
     | iteracion
-    | puts
-
-
-
     '''
 
 
 def p_condicional_if(p):
     '''
-    condicional_if : IF identificador lista_codigo END
-    | IF identificador lista_codigo else END
-    | IF identificador lista_codigo elsif END
-    | IF identificador lista_codigo else elsif END
-    | IF identificador lista_codigo elsif else END
+    condicional_if : IF content_if lista_codigo END
+    | IF content_if lista_codigo else END
+    | IF content_if lista_codigo elsif END
+    | IF LPAREN content_if RPAREN lista_codigo END
+    | IF LPAREN content_if RPAREN lista_codigo else END
+    | IF LPAREN content_if RPAREN lista_codigo elsif END
 
-    | IF expresion_condicion lista_codigo END
-    | IF expresion_condicion lista_codigo else END
-    | IF expresion_condicion lista_codigo elsif END
-    | IF expresion_condicion lista_codigo else elsif END
-    | IF expresion_condicion lista_codigo elsif else END
-    else : ELSE varias_exp
-    | ELSE identificador else
-    | ELSE lista_codigo else
+    content_if : identificador
+    | expresion_condicion
 
+    else : ELSE lista_codigo
+    | ELSE lista_codigo elsif
     elsif : ELSIF expresion_condicion lista_codigo
     | ELSIF expresion_condicion lista_codigo elsif
-    | ELSIF identificador lista_codigo
-    | ELSIF identificador lista_codigo elsif
+        | ELSIF expresion_condicion lista_codigo else
+
+    '''
+# regla semantica de condicion restringe el uso de booleanos, no se puede comparar con números
+def p_expresion_condicion(p):
+    '''expresion_condicion : valores_cond opNum valores_cond
+   | identificador opIgual  BOOLEAN
+    | BOOLEAN opIgual identificador
+    | identificador opIgual valores_cond
+    | valores_cond opIgual identificador
+
     '''
 
+def p_valores_cond(p):
+    '''valores_cond : valores_mat
+    | STRING
+     '''
+def p_operador_condicion(p):
+    ''' operador_condicion : opNum
+    | opIgual
+      opNum : LESS
+        | LESS EQUALS
+        | GREATER
+        | GREATER EQUALS
+    opIgual : ISEQUAL
+        | NOT EQUALS
 
-def p_expresion_condicion(p):
-    '''expresion_condicion : expresion EQUALS EQUALS expresion
-    | expresion ISEQUAL expresion
-    | expresion NOT EQUALS expresion
-    | expresion LESS expresion
-    | expresion LESS EQUALS expresion
-    | expresion GREATER expresion
-    | expresion GREATER EQUALS expresion
-    | expresion AND expresion
-    | expresion OR expresion
-    | NOT expresion'''
-
+    '''
 
 def p_iteracion(p):
-    ''' iteracion : WHILE expresion lista_codigo END
+    ''' iteracion : WHILE content_if lista_codigo END
+    | WHILE LPAREN content_if RPAREN lista_codigo END
     | FOR expresion IN expresion lista_codigo END
     | FOR expresion IN rango lista_codigo END
+    | FOR LPAREN expresion RPAREN IN expresion lista_codigo END
+    | FOR LPAREN expresion RPAREN IN rango lista_codigo END
 
-    rango : LPAREN INTEGER DOT DOT INTEGER RPAREN
+    rango : LPAREN valorR DOT DOT valorR RPAREN
+
+    valorR : expresion_matematica
+    | valores_mat
     '''
 
 
@@ -177,26 +177,31 @@ def p_times(p):
     '''
 
 
+
+# regla semántica : iperaciones_,matemáticas  solo se puede hacerentre numero o variables pero no puede hacerse con valores booleanos
+
 def p_expresion_matematica(p):
     """
-    expresion_matematica : expresion PLUS expresion
-                    | expresion MINUS expresion
-                    | expresion TIMS expresion
-                    | expresion DIVIDE expresion
+    expresion_matematica : valores_mat operador valores_mat
+    | valores_mat operador expresion_matematica
     """
-
-
+def p_valores_mat(p):
+    ''' valores_mat : number
+    | identificador '''
+def p_operador(p):
+    '''operador : PLUS
+    | MINUS
+    | TIMS
+    | DIVIDE '''
 def p_asignacion(p):
-    """asignacion : identificador EQUALS expresion
-                | identificador PLUS EQUALS expresion
-                | identificador MINUS EQUALS expresion"""
+    '''asignacion : identificador EQUALS expresion'''
 
 
 def p_llamar_funcion(p):
-    '''llamar_funcion : VARIABLE
-    | VARIABLE LPAREN parametro RPAREN
-    | VARIABLE DOT VARIABLE
-    | identificador DOT VARIABLE'''
+    '''llamar_funcion : VARIABLE DOT LENGTH
+    | VARIABLE DOT KEY
+    | VARIABLE DOT FIRST
+    | VARIABLE DOT LAST'''
 
 
 def p_vacio(p):
