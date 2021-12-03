@@ -123,17 +123,17 @@ def p_condicional_if(p):
     | IF LPAREN content_if RPAREN lista_codigo else END
     | IF LPAREN content_if RPAREN lista_codigo elsif END
 
-    content_if : identificador
-    | expresion_condicion
-
     else : ELSE lista_codigo
     | ELSE lista_codigo elsif
-    elsif : ELSIF expresion_condicion lista_codigo
-    | ELSIF expresion_condicion lista_codigo elsif
-    | ELSIF expresion_condicion lista_codigo else
-    | ELSIF LPAREN expresion_condicion RPAREN lista_codigo
-    | ELSIF LPAREN expresion_condicion RPAREN lista_codigo elsif
-    | ELSIF LPAREN expresion_condicion RPAREN lista_codigo else
+    elsif : ELSIF content_if  lista_codigo
+    | ELSIF content_if  lista_codigo elsif
+    | ELSIF content_if  lista_codigo else
+    | ELSIF LPAREN content_if  RPAREN lista_codigo
+    | ELSIF LPAREN content_if  RPAREN lista_codigo elsif
+    | ELSIF LPAREN content_if  RPAREN lista_codigo else
+
+    content_if : identificador
+    | expresion_condicion
 
     '''
 # regla semantica de condicion restringe el uso de booleanos, no se puede comparar con números
