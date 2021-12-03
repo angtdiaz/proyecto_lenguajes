@@ -11,3 +11,18 @@ def mostrar(frase, valor)
         end
     end
  end
+
+#Error sintáctico
+if(valor===1)
+    puts "hola"
+end
+
+#Error Lexico
+18%5=3
+
+#Error Semántico
+if(true>true)
+    puts "chao"
+end
+
+
