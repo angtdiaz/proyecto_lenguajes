@@ -22,7 +22,11 @@ reserved = {
     'for': 'FOR',
     'return': 'RETURN',
     'puts': 'PUTS',
-    'times': 'TIMES'
+    'times': 'TIMES',
+    'length': 'LENGTH',
+    'key': 'KEY',
+    'first': 'FIRST',
+    'last': 'LAST'
 }
 
 tokens = tokens + list(reserved.values())

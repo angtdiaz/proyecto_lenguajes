@@ -1,12 +1,13 @@
-if 5 > 4  
-  puts 'La variable xyz es mayor que 4'  
-  puts 'Puedo poner mas instrucciones dentro del if'
-  if xyz == 5  
-    puts 'Se puede anidar un bloque if,else,end dentro de otro' 
-  else  
-    puts "Parte del bloque anidado"  
-  end  
-else  
-  puts 'La variable xyz no es mayor que 4'
-  puts 'Tambien puedo poner multiples sentencias'
-end
+frases=["erase una vez", "ojo por ojo", "lo que el viento se llevo", "los abuelos deberian ser eternos"]
+def mostrar(frase, valor)
+    if (valor==1)
+        n= frase.length
+        for i  in (0..n)
+            puts frase[i]
+         end
+      elseif (valor== 2)
+        for i  in (0..n-2)
+            puts frase[i]
+        end
+    end
+ end
