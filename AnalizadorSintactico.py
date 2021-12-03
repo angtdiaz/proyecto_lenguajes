@@ -8,21 +8,26 @@ sucess = True
 # Regla padre
 
 #
+
+
 def p_programa(p):
-   '''programa : clase
-    | metodo
-    | clase programa
-    | metodo programa
-    | lista_codigo programa
-    | expresion
-    | expresion programa
-    '''
+    '''programa : clase
+     | metodo
+     | clase programa
+     | metodo programa
+     | lista_codigo programa
+     | expresion
+     | expresion programa
+     '''
+
+
 def p_identificador(p):
     ''' identificador : VARIABLE
     | CONSTANT
     | VARIABLE_GLOBAL
     | VARIABLE_CLASE
     | VARIABLE_INSTANCIA'''
+
 
 def p_number(p):
     '''number : INTEGER
@@ -51,7 +56,6 @@ def p_arreglo(p):
     arreglo : identificador EQUALS LBRACKET elementos RBRACKET
     valorArr : identificador LBRACKET valores_mat RBRACKET
     '''
-
 
 
 def p_elementos(p):
@@ -112,29 +116,12 @@ def p_metodo(p):
 
 def p_condicional_if(p):
     '''
-<<<<<<< HEAD
-    condicional_if : IF identificador lista_codigo END
-    | IF identificador lista_codigo else END
-    | IF identificador lista_codigo elsif END
-    | IF identificador lista_codigo else elsif END
-    | IF identificador lista_codigo elsif else END
-
-    | IF expresion_condicion lista_codigo END
-    | IF expresion_condicion lista_codigo else END
-    | IF expresion_condicion lista_codigo elsif END
-    | IF expresion_condicion lista_codigo else elsif END
-    | IF expresion_condicion lista_codigo elsif else END
-    else : ELSE expresion_condicion
-    | ELSE identificador else
-    | ELSE lista_codigo else
-=======
     condicional_if : IF content_if lista_codigo END
     | IF content_if lista_codigo else END
     | IF content_if lista_codigo elsif END
     | IF LPAREN content_if RPAREN lista_codigo END
     | IF LPAREN content_if RPAREN lista_codigo else END
     | IF LPAREN content_if RPAREN lista_codigo elsif END
->>>>>>> ba0faaa7399a72b1835c76f81a2dd0f99a3f5e42
 
     content_if : identificador
     | expresion_condicion
@@ -150,6 +137,8 @@ def p_condicional_if(p):
 
     '''
 # regla semantica de condicion restringe el uso de booleanos, no se puede comparar con números
+
+
 def p_expresion_condicion(p):
     '''expresion_condicion : valores_cond opNum valores_cond
    | identificador opIgual  BOOLEAN
@@ -159,10 +148,13 @@ def p_expresion_condicion(p):
 
     '''
 
+
 def p_valores_cond(p):
     '''valores_cond : valores_mat
     | STRING
      '''
+
+
 def p_operador_condicion(p):
     ''' operador_condicion : opNum
     | opIgual
@@ -174,6 +166,7 @@ def p_operador_condicion(p):
         | NOT EQUALS
 
     '''
+
 
 def p_iteracion(p):
     ''' iteracion : WHILE content_if lista_codigo END
@@ -198,7 +191,6 @@ def p_times(p):
     '''
 
 
-
 # regla semántica : iperaciones_,matemáticas  solo se puede hacerentre numero o variables pero no puede hacerse con valores booleanos
 
 def p_expresion_matematica(p):
@@ -206,14 +198,20 @@ def p_expresion_matematica(p):
     expresion_matematica : valores_mat operador valores_mat
     | valores_mat operador expresion_matematica
     """
+
+
 def p_valores_mat(p):
     ''' valores_mat : number
     | identificador '''
+
+
 def p_operador(p):
     '''operador : PLUS
     | MINUS
     | TIMS
     | DIVIDE '''
+
+
 def p_asignacion(p):
     '''asignacion : identificador EQUALS expresion'''
 
